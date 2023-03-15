@@ -1,0 +1,91 @@
+package oo.composicao;
+
+public class Motor {
+	 final Carro carro;
+	boolean ligado = false;
+	double fatorInjecao = 1;
+	
+	Motor (Carro carro) {
+		this.carro = carro;
+		
+	}
+	int giros () {
+		if(!ligado) {
+			return 0;
+		} else {
+			return (int) Math.round(fatorInjecao * 3000);
+		}
+	}
+  
+  
+  package oo.composicao;
+
+public class Carro {
+	
+	 final Motor motor;
+	
+	Carro () {
+		this.motor = new Motor(this);
+	}
+	
+	void acelerar() {
+		if (motor.fatorInjecao < 2.5) {
+		motor.fatorInjecao += 0.4;
+		
+		}	
+	}
+
+	void frear () {
+	   if(motor.fatorInjecao > 0.5) {
+		motor.fatorInjecao -= 0.4;
+	}
+	
+	void ligar() {
+		motor.ligado = true;
+	}
+	
+	void desligar () {
+		motor.ligado = false;
+	}
+	
+	boolean estaLigado () {
+		return motor.ligado;
+	}
+}
+
+package oo.composicao;
+
+public class CarroTeste {
+	public static void main(String[] args) {
+		
+		Carro c1 = new Carro();
+		System.out.println(c1.estaLigado());
+		
+		c1.ligar();
+		System.out.println(c1.estaLigado());
+		
+		System.out.println(c1.motor.giros());
+		
+		c1.acelerar();
+		c1.acelerar();
+		c1.acelerar();
+		c1.acelerar();
+		
+		System.out.println(c1.motor.giros());
+		
+		c1.frear();
+		c1.frear();
+		c1.frear();
+		c1.frear();
+		c1.frear();
+		c1.frear();
+		c1.frear();
+		c1.frear();
+		
+		// faltou encapsulamento !!!
+		// c1.motor.fatorInjecao  = -30;
+		
+		System.out.println(c1.motor.giros());
+	}
+
+}
